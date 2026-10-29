@@ -1,0 +1,32 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.0
+    hooks:
+      - id: ruff
+        args: [ --fix ]
+      - id: ruff-format
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.11.2
+    hooks:
+      - id: mypy
+        args: [--explicit-package-bases, --config-file=pyproject.toml]
+        exclude: ^pizzeria_env/   # <-- ADD THIS LINE HERE
+        additional_dependencies:
+          - django-stubs
+          - django-types
+          - types-Pillow
+          - pydantic>=2.0.0
+          - email-validator>=2.0.0
+          
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
