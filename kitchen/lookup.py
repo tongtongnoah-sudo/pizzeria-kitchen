@@ -24,3 +24,37 @@ def count_same_item_pairs(orders: list[Order]) -> int:
             if orders[i].item == orders[j].item:
                 pairs += 1
     return pairs
+
+
+def linear_lookup(
+    orders: list[Order],
+    order_id: int,
+) -> tuple[Order | None, int]:
+    """O(n). Returns (the order or None, how many orders were checked)."""
+    probes = 0
+    for order in orders:
+        probes += 1
+        if order.order_id == order_id:
+            return order, probes
+    return None, probes
+
+
+def binary_lookup(
+    orders: list[Order],
+    order_id: int,
+) -> tuple[Order | None, int]:
+    """O(log n). The orders must be sorted by order_id."""
+    low = 0
+    high = len(orders) - 1
+    probes = 0
+    while low <= high:  # <=, so the last candidate still gets checked
+        mid = (low + high) // 2  # // keeps mid an int; / would make a float
+        probes += 1
+        guess = orders[mid]
+        if guess.order_id == order_id:
+            return guess, probes
+        elif guess.order_id > order_id:
+            high = mid - 1
+        else:
+            low = mid + 1
+    return None, probes
